@@ -2,7 +2,11 @@ import { ConditionalEdgeRouter, END } from '@langchain/langgraph'
 import { CalculatorState } from './calculator.state.js'
 import { AIMessage } from '@langchain/core/messages'
 
-const shouldContinue: ConditionalEdgeRouter<typeof CalculatorState, Record<string, unknown>, 'toolNode'> = state => {
+export const shouldContinue: ConditionalEdgeRouter<
+  typeof CalculatorState,
+  Record<string, unknown>,
+  'toolNode'
+> = state => {
   const lastMessage = state.messages.at(-1)
 
   if (!lastMessage || !AIMessage.isInstance(lastMessage)) {

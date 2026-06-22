@@ -5,7 +5,7 @@ import { haikuWithTools } from '../../models/anthropic.model.js'
 import { calculatorSystemPrompt } from './calculator.prompt.js'
 import { toolsByName } from '../../tools/registry.js'
 
-const llmCall: GraphNode<typeof CalculatorState> = async state => {
+const llmCallNode: GraphNode<typeof CalculatorState> = async state => {
   const response = await haikuWithTools.invoke([new SystemMessage(calculatorSystemPrompt), ...state.messages])
 
   return {
@@ -31,3 +31,5 @@ const toolNode: GraphNode<typeof CalculatorState> = async state => {
 
   return { messages: result }
 }
+
+export { llmCallNode, toolNode }
