@@ -1,0 +1,23 @@
+import { tool } from '@langchain/core/tools'
+import z from 'zod'
+
+const multiply = (args: Record<string, number>): number => {
+  const { a, b } = args
+
+  if (!a || !b) {
+    throw new Error('Invalid Input')
+  }
+
+  return a * b
+}
+
+const multiplyTool = tool(({ a, b }) => multiply({ a, b }), {
+  name: 'multiply',
+  description: 'Multiply two numbers',
+  schema: z.object({
+    a: z.number(),
+    b: z.number(),
+  }),
+})
+
+export { multiplyTool }
