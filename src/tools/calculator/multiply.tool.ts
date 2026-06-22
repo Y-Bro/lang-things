@@ -12,7 +12,7 @@ const multiply = (args: Record<string, number>): number => {
 }
 
 const multiplyTool = tool(({ a, b }) => multiply({ a, b }), {
-  name: 'multiply',
+  name: 'multiply_tool',
   description: 'Multiply two numbers',
   schema: z.object({
     a: z.number(),

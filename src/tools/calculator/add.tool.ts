@@ -12,7 +12,7 @@ const add = (args: Record<string, number>): number => {
 }
 
 const addTool = tool(({ a, b }) => add({ a, b }), {
-  name: 'add',
+  name: 'add_tool',
   description: 'Add two numbers',
   schema: z.object({
     a: z.number().describe('First number'),

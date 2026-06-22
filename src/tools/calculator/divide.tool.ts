@@ -12,7 +12,7 @@ const divide = (args: Record<string, number>): number => {
 }
 
 const divideTool = tool(({ a, b }) => divide({ a, b }), {
-  name: 'divide',
+  name: 'divide_tool',
   description: 'divide two numbers',
   schema: z.object({
     a: z.number(),
