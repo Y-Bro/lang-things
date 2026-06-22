@@ -1,4 +1,5 @@
 import { calculatorTools } from './calculator/index.js'
+import { ToolCall } from '@langchain/core/messages'
 
 const allTools = [...calculatorTools]
 
