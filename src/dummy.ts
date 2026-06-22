@@ -16,7 +16,7 @@ const graph = new StateGraph(State)
 
 const testDummyGraph = async (text: string): Promise<{ message: (typeof MessagesValue)['ValueType'] }> => {
   const test = await graph.invoke({
-    message: [{ role: 'ai', content: text }],
+    message: [{ role: 'human', content: text }],
   })
 
   return test

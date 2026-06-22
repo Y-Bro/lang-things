@@ -10,3 +10,5 @@ const calculatorAgent = new StateGraph(CalculatorState)
   .addConditionalEdges('llmCallNode', shouldContinue, ['toolNode', END])
   .addEdge('toolNode', 'llmCallNode')
   .compile()
+
+export { calculatorAgent }
