@@ -5,3 +5,6 @@ dist/
 *.pem
 *.key
 .claude/settings.local.json
+
+# LangGraph API
+.langgraph_api

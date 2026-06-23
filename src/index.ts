@@ -1,12 +1,14 @@
+import dotenv from 'dotenv'
 import { testDummyGraph } from './dummy.js'
-import { tools, toolsByName } from './tools/registry.js'
 import { runCalculatorWorkflow } from './workflows/calculator.workflow.js'
+import { runCalculatorAssistantWorfklow } from './workflows/calculator-assistant.js'
+dotenv.config()
 
-const dummyresult = await testDummyGraph('Oh the misery')
+// const dummyresult = await testDummyGraph('Oh the misery')
 
-console.log(dummyresult)
+// console.log(dummyresult)
 
 const calculatorWorkflow = async () => {
-  await runCalculatorWorkflow('Add 3 and 26')
+  await runCalculatorAssistantWorfklow('Add 3 and 26 and then divide the total by 16')
 }
 calculatorWorkflow()

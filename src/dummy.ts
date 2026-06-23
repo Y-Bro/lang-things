@@ -8,7 +8,7 @@ const mockLlm: GraphNode<typeof State> = state => {
   return { message: [{ role: 'ai', content: 'Hellow world' }] }
 }
 
-const graph = new StateGraph(State)
+export const graph = new StateGraph(State)
   .addNode('mock_llm', mockLlm)
   .addEdge(START, 'mock_llm')
   .addEdge('mock_llm', END)

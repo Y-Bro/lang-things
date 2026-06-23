@@ -1,0 +1,8 @@
+{
+    "node_version": "20",
+    "graphs": {
+        "calculatorAgent": "./src/agents/calculator/calculator.agent.ts:calculatorAgent",
+        "graph": "./src/dummy.ts:graph"
+    },
+    "env": ".env"
+}
