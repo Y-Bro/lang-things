@@ -4,7 +4,7 @@ import { calculatorAssistantAgent } from '../agents/calculator-assistant/agent.j
 const runCalculatorAssistantWorfklow = async (input: string) => {
   const result = await calculatorAssistantAgent.invoke({ messages: [new HumanMessage(input)] })
 
-  console.log(result)
+  console.dir(result, { depth: null })
 }
 
 export { runCalculatorAssistantWorfklow }

@@ -20,9 +20,21 @@ const classifyRequestNode: GraphNode<typeof CalculatorAssistantState> = async st
 const parseCalculationNode: GraphNode<typeof CalculatorAssistantState> = async state => {
   return {
     calculationRequest: {
-      steps: [{}],
+      steps: [
+        { operation: 'add', operands: [3, 26] },
+        {
+          operation: 'divide',
+          operands: ['previous', 16],
+        },
+      ],
     },
   }
 }
 
-export { llmCallNode, classifyRequestNode, parseCalculationNode }
+const executeCalculationNode: GraphNode<typeof CalculatorAssistantState> = async state => {
+  return {
+    calculationResult: 1.825,
+  }
+}
+
+export { llmCallNode, classifyRequestNode, parseCalculationNode, executeCalculationNode }

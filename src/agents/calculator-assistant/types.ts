@@ -8,3 +8,5 @@ export type calculationStep = {
 export type CalculationRequest = {
   steps: calculationStep[]
 }
+
+export type CalculationResult = number
