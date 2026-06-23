@@ -37,4 +37,10 @@ const executeCalculationNode: GraphNode<typeof CalculatorAssistantState> = async
   }
 }
 
-export { llmCallNode, classifyRequestNode, parseCalculationNode, executeCalculationNode }
+const buildResponseNode: GraphNode<typeof CalculatorAssistantState> = async state => {
+  return {
+    finalAnswer: String(state.calculationResult ?? 23),
+  }
+}
+
+export { llmCallNode, classifyRequestNode, parseCalculationNode, executeCalculationNode, buildResponseNode }

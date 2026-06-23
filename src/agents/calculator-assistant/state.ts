@@ -6,6 +6,7 @@ const CalculatorAssistantState = Annotation.Root({
   intent: Annotation<Intent>(),
   calculationRequest: Annotation<CalculationRequest>(),
   calculationResult: Annotation<CalculationResult>,
+  finalAnswer: Annotation<string | unknown>(),
 })
 
 export { CalculatorAssistantState }
