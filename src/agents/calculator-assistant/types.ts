@@ -1,4 +1,4 @@
-export type Intent = 'calculate'
+export type Intent = 'calculate' | 'non_math' | 'explain_concept'
 
 export type calculationStep = {
   operation: 'add' | 'subtract' | 'multiply' | 'divide'
@@ -10,3 +10,7 @@ export type CalculationRequest = {
 }
 
 export type CalculationResult = number
+
+export type RejectionResponse = string
+
+export type ConceptExplanation = string
