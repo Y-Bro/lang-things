@@ -14,3 +14,8 @@ export type CalculationResult = number
 export type RejectionResponse = string
 
 export type ConceptExplanation = string
+
+export type ExecutionTraceEvent = {
+  node: string
+  action: string
+}

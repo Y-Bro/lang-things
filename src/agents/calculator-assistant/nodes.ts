@@ -1,39 +1,39 @@
 import { GraphNode } from '@langchain/langgraph'
 import { CalculatorAssistantState } from './state.js'
 import { haiku } from '../../models/anthropic.model.js'
-import { CalculationRequest } from './types.js'
-
-const llmCallNode: GraphNode<typeof CalculatorAssistantState> = async state => {
-  const response = await haiku.invoke([...state.messages])
-
-  return {
-    messages: [response],
-  }
-}
+import { CalculationRequest, Intent } from './types.js'
+import { classifierGeminiModel, geminiV2Flash, parserGeminiModel } from '../../models/google.models.js'
+import { SystemMessage } from '@langchain/core/messages'
+import { classifierPrompt, ParserPrompt } from './prompt.js'
 
 const classifyRequestNode: GraphNode<typeof CalculatorAssistantState> = async state => {
+  const response = await classifierGeminiModel.invoke([new SystemMessage(classifierPrompt), state.messages.at(-1)!])
+
   return {
-    intent: 'non_math',
+    intent: response.intent as Intent,
   }
 }
 
 const parseCalculationNode: GraphNode<typeof CalculatorAssistantState> = async state => {
+  const response = await parserGeminiModel.invoke([new SystemMessage(ParserPrompt), state.messages.at(-1)!])
+
+  if (response.ok) {
+    return {
+      calculationRequest: {
+        steps: response.steps,
+      },
+    }
+  }
+
   return {
-    calculationRequest: {
-      steps: [
-        { operation: 'add', operands: [3, 26] },
-        {
-          operation: 'divide',
-          operands: ['previous', 16],
-        },
-      ],
-    },
+    lastError: response.error,
   }
 }
 
 const executeCalculationNode: GraphNode<typeof CalculatorAssistantState> = async state => {
   return {
     calculationResult: 1.825,
+    executionTrace: [{ node: 'Calculate', action: 'calculate the math' }],
   }
 }
 
@@ -54,6 +54,7 @@ const buildResponseNode: GraphNode<typeof CalculatorAssistantState> = async stat
 
   return {
     finalAnswer,
+    executionTrace: [{ node: 'FinalResponse', action: 'responsd' }],
   }
 }
 
@@ -72,7 +73,6 @@ const explainConceptNode: GraphNode<typeof CalculatorAssistantState> = async sta
 }
 
 export {
-  llmCallNode,
   classifyRequestNode,
   parseCalculationNode,
   executeCalculationNode,
