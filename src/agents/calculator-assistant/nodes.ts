@@ -5,6 +5,7 @@ import { CalculationRequest, Intent } from './types.js'
 import { classifierGeminiModel, geminiV2Flash, parserGeminiModel } from '../../models/google.models.js'
 import { SystemMessage } from '@langchain/core/messages'
 import { classifierPrompt, ParserPrompt } from './prompt.js'
+import { calculate } from '../../util/calculate.js'
 
 const classifyRequestNode: GraphNode<typeof CalculatorAssistantState> = async state => {
   const response = await classifierGeminiModel.invoke([new SystemMessage(classifierPrompt), state.messages.at(-1)!])
@@ -31,9 +32,24 @@ const parseCalculationNode: GraphNode<typeof CalculatorAssistantState> = async s
 }
 
 const executeCalculationNode: GraphNode<typeof CalculatorAssistantState> = async state => {
+  const calculationRequest = state.calculationRequest
+
+  if (!calculationRequest.steps) {
+    return {
+      lastError: 'No calulcation request found',
+    }
+  }
+
+  const calculationResult = calculate(calculationRequest)!
+
+  if (!calculationResult.ok) {
+    return {
+      lastError: calculationResult.error,
+    }
+  }
+
   return {
-    calculationResult: 1.825,
-    executionTrace: [{ node: 'Calculate', action: 'calculate the math' }],
+    calculationResult: calculationResult.result!,
   }
 }
 
