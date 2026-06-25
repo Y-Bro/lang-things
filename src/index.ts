@@ -9,6 +9,10 @@ dotenv.config()
 // console.log(dummyresult)
 
 const calculatorWorkflow = async () => {
-  await runCalculatorAssistantWorfklow('Explain mathematical induction')
+  try {
+    await runCalculatorAssistantWorfklow('add 26 to 35 and divide it by 10 and multiply it by 16')
+  } catch (error: any) {
+    console.log(error.data.error.details[0].fieldViolations)
+  }
 }
 calculatorWorkflow()

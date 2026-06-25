@@ -21,4 +21,9 @@ const routeAfterClassification: ConditionalEdgeRouter<
   return END
 }
 
-export { routeAfterClassification }
+const routeAfterParse: ConditionalEdgeRouter<typeof CalculatorAssistantState> = state => {
+  if (state.lastError) return 'finalResult'
+  return 'calculate'
+}
+
+export { routeAfterClassification, routeAfterParse }

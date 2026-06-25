@@ -8,7 +8,7 @@ import {
   parseCalculationNode,
   rejectNonMathNode,
 } from './nodes.js'
-import { routeAfterClassification } from './router.js'
+import { routeAfterClassification, routeAfterParse } from './router.js'
 import { logNode } from '../../util/logging.js'
 
 const calculatorAssistantAgent = new StateGraph(CalculatorAssistantState)
@@ -21,7 +21,7 @@ const calculatorAssistantAgent = new StateGraph(CalculatorAssistantState)
   .addNode('explain', logNode('explain', explainConceptNode))
   .addEdge(START, 'classifier')
   .addConditionalEdges('classifier', routeAfterClassification, ['parse', 'reject', 'explain'])
-  .addEdge('parse', 'calculate')
+  .addConditionalEdges('parse', routeAfterParse, ['calculate', 'finalResult'])
   .addEdge('calculate', 'finalResult')
   .addEdge('reject', 'finalResult')
   .addEdge('explain', 'finalResult')

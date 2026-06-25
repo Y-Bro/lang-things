@@ -17,7 +17,7 @@ const classifyRequestNode: GraphNode<typeof CalculatorAssistantState> = async st
 const parseCalculationNode: GraphNode<typeof CalculatorAssistantState> = async state => {
   const response = await parserGeminiModel.invoke([new SystemMessage(ParserPrompt), state.messages.at(-1)!])
 
-  if (response.ok) {
+  if (response.status === 'success' && response.steps) {
     return {
       calculationRequest: {
         steps: response.steps,
@@ -40,6 +40,13 @@ const executeCalculationNode: GraphNode<typeof CalculatorAssistantState> = async
 const buildResponseNode: GraphNode<typeof CalculatorAssistantState> = async state => {
   let finalAnswer
 
+  if (state.lastError) {
+    finalAnswer = String(state.lastError)
+    return {
+      finalAnswer,
+    }
+  }
+
   if (state.intent === 'calculate') {
     finalAnswer = String(state.calculationResult)
   }
@@ -54,7 +61,6 @@ const buildResponseNode: GraphNode<typeof CalculatorAssistantState> = async stat
 
   return {
     finalAnswer,
-    executionTrace: [{ node: 'FinalResponse', action: 'responsd' }],
   }
 }
 
