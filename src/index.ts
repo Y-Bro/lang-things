@@ -10,7 +10,7 @@ dotenv.config()
 
 const calculatorWorkflow = async () => {
   try {
-    await runCalculatorAssistantWorfklow('add 26 to 35 and divide it by 10 and multiply it by 16 and then divide by 0')
+    await runCalculatorAssistantWorfklow('explain markov chains')
   } catch (error: any) {
     console.log(error.data.error.details[0].fieldViolations)
   }
